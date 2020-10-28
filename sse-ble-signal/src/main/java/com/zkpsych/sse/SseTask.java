@@ -18,7 +18,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class SseTask implements Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(SseTask.class);
-    private static final String GATEWAY_URL = "http://192.168.7.17/gap/rssi";
+    private final String GATEWAY_URL;
+
+    public SseTask(String GATEWAY_URL) {
+        this.GATEWAY_URL = "http://" + GATEWAY_URL + "/gap/rssi";
+    }
 
     @Override
     public void run() {

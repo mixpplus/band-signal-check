@@ -25,7 +25,12 @@ public class ResolveDataTask implements Runnable {
     /**
      * 单次写入值个数
      */
-    private final int per = 30;
+    private final int perCount;
+
+    public ResolveDataTask(int perCount) {
+        this.perCount = perCount;
+    }
+
     @Override
     public void run() {
 
@@ -66,7 +71,7 @@ public class ResolveDataTask implements Runnable {
             rssiModel.setRssi(rssi);
             rssiModel.setTimeStamp(currentTimeMillis);
             cacheList.add(rssiModel);
-            if (cacheList.size() >= per) {
+            if (cacheList.size() >= perCount) {
                 write();
             }
 
@@ -84,7 +89,7 @@ public class ResolveDataTask implements Runnable {
         writeToFile(sbTag.toString(), filePath);
         writeToFile("\n",filePath);
 
-        for (int i = 0; i < per; i++) {
+        for (int i = 0; i < perCount; i++) {
             StringBuilder sb = new StringBuilder();
             for (String deviceId : deviceSet) {
                 List<RssiModel> cacheList = cache.get(deviceId);
