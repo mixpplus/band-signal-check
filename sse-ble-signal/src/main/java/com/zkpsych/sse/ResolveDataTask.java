@@ -108,18 +108,7 @@ public class ResolveDataTask implements Runnable {
             writeToFile(sb.toString(), filePath);
         }
         writeToFile("\n", filePath);
-        /*for (String deviceId : deviceSet) {
 
-            List<Object> cacheList = cache.get(deviceId);
-            StringBuilder sb = new StringBuilder();
-            sb.append(deviceId).append("\n");
-            for (Object o : cacheList) {
-
-                sb.append(o).append("\n");
-            }
-            write(sb.toString(), filePath);
-        }*/
-        // todo 清空缓存中的数据
         cache.clear();
     }
 
