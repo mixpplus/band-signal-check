@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class SseTask implements Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(SseTask.class);
-    private static final String GATEWAY_URL = "http://192.168.8.110/gap/rssi";
+    private static final String GATEWAY_URL = "http://192.168.7.17/gap/rssi";
 
     @Override
     public void run() {
@@ -26,7 +26,7 @@ public class SseTask implements Runnable {
         Request request = new Request.Builder().url(GATEWAY_URL).build();
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(1, TimeUnit.DAYS)
-                .readTimeout(1, TimeUnit.DAYS)//这边需要将超时显示设置长一点，不然刚连上就断开，之前以为调用方式错误被坑了半天
+                .readTimeout(1, TimeUnit.DAYS) // 这边需要将超时显示设置长一点，不然刚连上就断开，之前以为调用方式错误被坑了半天
                 .build();
 
         // 实例化EventSource，注册EventSource监听器

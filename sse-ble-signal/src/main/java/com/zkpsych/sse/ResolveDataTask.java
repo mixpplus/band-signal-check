@@ -20,7 +20,7 @@ import java.util.*;
 public class ResolveDataTask implements Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(ResolveDataTask.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final Map<String, List<Object>> cache = new TreeMap<>();
+    private final Map<String, List<RssiModel>> cache = new TreeMap<>();
     private final String filePath = "./sse.csv";
     /**
      * 单次写入值个数
@@ -49,6 +49,7 @@ public class ResolveDataTask implements Runnable {
             }
             String deviceId = sseModel.getId();
             int rssi = sseModel.getRssi();
+            long currentTimeMillis = System.currentTimeMillis();
 
             if (StrUtil.isEmpty(deviceId)) {
                 continue;
@@ -56,12 +57,15 @@ public class ResolveDataTask implements Runnable {
             if (rssi == 0) {
                 continue;
             }
-            List<Object> cacheList = cache.get(deviceId);
+            List<RssiModel> cacheList = cache.get(deviceId);
             if (CollUtil.isEmpty(cacheList)) {
                 cacheList = new ArrayList<>();
                 cache.put(deviceId, cacheList);
             }
-            cacheList.add(rssi);
+            RssiModel rssiModel = new RssiModel();
+            rssiModel.setRssi(rssi);
+            rssiModel.setTimeStamp(currentTimeMillis);
+            cacheList.add(rssiModel);
             if (cacheList.size() >= per) {
                 write();
             }
@@ -74,7 +78,7 @@ public class ResolveDataTask implements Runnable {
         StringBuilder sbTag = new StringBuilder();
         for (String deviceId : deviceSet) {
 
-            sbTag.append(deviceId).append(StrUtil.COMMA);
+            sbTag.append(deviceId).append(StrUtil.COMMA).append(StrUtil.COMMA);
 
         }
         writeToFile(sbTag.toString(), filePath);
@@ -83,15 +87,17 @@ public class ResolveDataTask implements Runnable {
         for (int i = 0; i < per; i++) {
             StringBuilder sb = new StringBuilder();
             for (String deviceId : deviceSet) {
-                List<Object> cacheList = cache.get(deviceId);
+                List<RssiModel> cacheList = cache.get(deviceId);
                 if (cacheList.size() > i) {
-                    Object data = cacheList.get(i);
+                    RssiModel data = cacheList.get(i);
                     if (ObjectUtil.isNotEmpty(data)) {
-                        sb.append(data);
+                        sb.append(data.getRssi()).append(StrUtil.COMMA).append(data.getTimeStamp()).append(StrUtil.COMMA);
                     }
+                } else {
+
+                    sb.append(StrUtil.COMMA).append(StrUtil.COMMA);
                 }
 
-                sb.append(StrUtil.COMMA);
             }
             sb.append("\n");
             writeToFile(sb.toString(), filePath);
