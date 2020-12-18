@@ -13,9 +13,9 @@ import java.io.File;
 import java.util.*;
 
 /**
- * @Description : 解析数据任务
- * @Author : ChangHao
- * @Date: 2020-10-12 17:57
+ * 解析数据任务
+ * @author : ChangHao
+ * @date 2020-10-12 17:57
  */
 public class ResolveDataTask implements Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(ResolveDataTask.class);

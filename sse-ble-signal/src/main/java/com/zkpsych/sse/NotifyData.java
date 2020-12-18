@@ -5,9 +5,9 @@ import cn.hutool.core.util.StrUtil;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * @Description : 收到的所有notify数据都先往该队列中存储
- * @Author : ChangHao
- * @Date: 2020-09-29 17:50
+ * 收到的所有notify数据都先往该队列中存储
+ * @author ChangHao
+ * @date 2020-09-29 17:50
  */
 public class NotifyData {
     private static final LinkedBlockingQueue<String> NOTIFY_QUEUE = new LinkedBlockingQueue<>();

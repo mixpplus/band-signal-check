@@ -1,9 +1,9 @@
 package com.zkpsych.sse;
 
 /**
- * @Description : rssi model
- * @Author : ChangHao
- * @Date: 2020-10-28 15:46
+ * rssi model
+ * @author : ChangHao
+ * @date 2020-10-28 15:46
  */
 public class RssiModel {
     private int rssi;

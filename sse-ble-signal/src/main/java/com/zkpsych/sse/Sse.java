@@ -6,9 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @Description :
- * @Author : ChangHao
- * @Date: 2020-10-12 17:46
+ * @author : ChangHao
+ * @date 2020-10-12 17:46
  */
 public class Sse {
     private static final Logger LOG = LoggerFactory.getLogger(Sse.class);
@@ -23,7 +22,7 @@ public class Sse {
             throw new RuntimeException("请在启动命令设置单次采集个数，格式 -Dsse.perCount=xxx");
         }
         int count = Integer.parseInt(perCount);
-        ThreadUtil.newThread(new SseTask(url), "sseTask").start();
+//        ThreadUtil.newThread(new SseTask(url), "sseTask").start();
 
         ThreadUtil.newThread(new ResolveDataTask(count), "resolveDataTask").start();
     }
